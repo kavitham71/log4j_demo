@@ -1,51 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
-  <appender name="FILE" class="org.apache.log4j.ConsoleAppender">
-    <param name="Threshold" value="DEBUG"/>
+<log4j:configuration debug="true" xmlns:log4j='http://jakarta.apache.org/log4j/'>
+ 
+  <appender name="console" class="org.apache.log4j.ConsoleAppender">
+    <param name="Target" value="System.out"/>
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%d{DATE} %-5p [%t] %X{userId} %X{windowId} %X{requestId} %X{deviceRpid} %X{studyId} %c{2} %m%n"/>
+    <param name="ConversionPattern" value="%d{DATE} %-3p %c{1}:%L - %m%n" />
     </layout>
-    <!-- Filter out various internal polling (goes in separate file below) -->
-    <filter class="org.apache.log4j.filter.MDCMatchFilter">
-      <param name="KeyToMatch" value="userId"/>
-      <param name="ValueToMatch" value="&lt;health-check>"/>
-      <param name="ExactMatch" value="true"/>
-      <param name="chainPolicy" value="DenyOnMatch"/>
-    </filter>
-    <filter class="org.apache.log4j.filter.MDCMatchFilter">
-      <param name="KeyToMatch" value="userId"/>
-      <param name="ValueToMatch" value="&lt;polling>"/>
-      <param name="ExactMatch" value="true"/>
-      <param name="chainPolicy" value="DenyOnMatch"/>
-    </filter>
   </appender>
-  <appender name="POLL_FILE" class="org.apache.log4j.ConsoleAppender">
-    <param name="Threshold" value="DEBUG"/>
-    <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%d{DATE} %-5p [%t] %X{userId} %X{windowId} %X{requestId} %X{deviceRpid} %c{2} %m%n"/>
-    </layout>
-    <!-- Filter out everything except internal polling -->
-    <filter class="org.apache.log4j.filter.MDCMatchFilter">
-      <param name="KeyToMatch" value="userId"/>
-      <param name="ValueToMatch" value="&lt;health-check>"/>
-      <param name="ExactMatch" value="true"/>
-      <param name="chainPolicy" value="AcceptOnMatch"/>
+ 
+  <appender name="CLOUD" class="com.google.cloud.logging.logback.LoggingAppender">
+    <!-- Optional : filter logs at or above a level -->
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
     </filter>
-    <filter class="org.apache.log4j.filter.MDCMatchFilter">
-      <param name="KeyToMatch" value="userId"/>
-      <param name="ValueToMatch" value="&lt;polling>"/>
-      <param name="ExactMatch" value="true"/>
-      <param name="chainPolicy" value="AcceptOnMatch"/>
-    </filter>
-    <filter class="org.apache.log4j.varia.DenyAllFilter"/>
+    <log>application.log</log> <!-- Optional : default java.log -->
+    <resourceType>gae_app</resourceType> <!-- Optional : default: auto-detected, fallback: global -->
+    <enhancer>com.example.logging.logback.enhancers.ExampleEnhancer</enhancer> <!-- Optional -->
+    <flushLevel>WARN</flushLevel> <!-- Optional : default ERROR -->
   </appender>
-  <category name="com.github.susom">
-    <priority value="DEBUG"/>
-  </category>
-  <root>
-    <priority value="WARN"/>
-    <appender-ref ref="FILE"/>
-    <appender-ref ref="POLL_FILE"/>
-  </root>
+  
+ 
+ 
+  <root  level="info">
+    <priority value ="debug"></priority>
+    <appender-ref ref="console"></appender-ref>
+    <appender-ref ref="CLOUD" />
+  </root>   
 </log4j:configuration>
+
+
+
+
+
+
+
+
