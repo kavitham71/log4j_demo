@@ -39,49 +39,49 @@
 			<version>1.51.0</version>
 		</dependency>
 		<!-- Compile/runtime dependencies --> 
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version> ${appengine.target.version}</version>}
-		</dependency>
+                <dependency>
+                        <groupId>com.google.appengine</groupId>
+                        <artifactId>appengine-api-1.0-sdk</artifactId>
+                        <version> ${appengine.target.version}</version>}
+                </dependency>
 		<!-- Test dependencies -->
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-testing</artifactId>
-			<version> ${appengine.target.version}</version>}
-			<scope> test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-stubs</artifactId>
-			<version> ${appengine.target.version}</version>}
-			<scope> test</scope>
-		</dependency>
+                <dependency>
+                        <groupId>com.google.appengine</groupId>
+                        <artifactId>appengine-testing</artifactId>
+                        <version> ${appengine.target.version}</version>}
+                        <scope> test</scope>
+                </dependency>
+                <dependency>
+                        <groupId>com.google.appengine</groupId>
+                        <artifactId>appengine-api-stubs</artifactId>
+                        <version> ${appengine.target.version}</version>}
+                        <scope> test</scope>
+                </dependency>
 		
 	</dependencies>
-	<build>
-	 <plugins>
+        <build>
+         <plugins>
           <plugin>
            <groupId>org.apache.maven.plugins</groupId>
            <artifactId>maven-war-plugin</artifactId>
            <version>2.3</version>
-            <configuration>
-             <archiveClasses>true</archiveClasses>
-             <webResources>
+           <configuration>
+            <archiveClasses>true</archiveClasses>
+            <webResources>
             <!-- in order to interpolate version from pom into appengine-web.xml -->
-              <resource>
-               <directory>${basedir}/src/main/webapp/WEB-INF</directory>
-               <filtering>true</filtering>
-               <targetPath>WEB-INF</targetPath>
-              </resource>
+             <resource>
+              <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+              <filtering>true</filtering>
+              <targetPath>WEB-INF</targetPath>
+             </resource>
             </webResources>
-          </configuration>
-         </plugin>
-         <plugin>
-          <groupId>com.google.cloud.tools</groupId>
-          <artifactId>appengine-maven-plugin</artifactId>
-          <version>${appengine-maven-plugin-version}</version>
-        </plugin>
-      </plugins>
-</build>
+           </configuration>
+          </plugin>
+          <plugin>
+           <groupId>com.google.cloud.tools</groupId>
+           <artifactId>appengine-maven-plugin</artifactId>
+           <version>${appengine-maven-plugin-version}</version>
+          </plugin>
+         </plugins>
+        </build>
 </project>
