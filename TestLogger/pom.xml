@@ -38,5 +38,15 @@
 			<artifactId>google-cloud-logging</artifactId>
 			<version>1.51.0</version>
 		</dependency>
+		
 	</dependencies>
+	<build>
+	 <plugins>
+          <plugin>
+	   <groupId>com.google.appengine</groupId>
+           <artifactId>appengine-maven-plugin</artifactId>
+           <version>1.9.9</version>
+        </plugin>
+    </plugins>
+</build>
 </project>
